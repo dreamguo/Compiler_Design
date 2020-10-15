@@ -1,0 +1,43 @@
+const int a = 3;
+const char c = 'c';
+int b;
+
+char sa(int a, char tmp, int aa, int aaa, int aaaa) {
+	char b;
+	b = 's';
+	printf(b);
+	printf(a);
+	printf(tmp);
+	printf(aa);
+	printf(aaa);
+	printf(aaaa);
+	return (tmp);
+}
+
+void main(){
+	int d;
+	int i;
+	b = 2;
+	d = b;
+	printf(92700);
+	printf('b');
+	printf((c));
+	printf("sa() return: c == ", sa(1+d*c, c, 10, 20, ('e')));
+    printf((a+b+c)/d*c);
+	if (1 > -1) {
+		printf("1");
+	}
+	else {
+		printf("2");
+	}
+	if (('3') < 1) {
+		printf("second 1");
+	}
+	else {
+		printf("second 2");
+	}
+	for (i = 0; i <= 10; i = i + 2) {
+		printf("\\\n\\i: \", i);
+	}
+	return;
+}
