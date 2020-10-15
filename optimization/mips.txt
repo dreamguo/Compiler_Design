@@ -1,0 +1,469 @@
+.data
+enter:     .asciiz "\n"
+$str_0:     .asciiz "x = "
+$str_1:     .asciiz "y = "
+$str_2:     .asciiz "SWAP x = "
+$str_3:     .asciiz "SWAP y = "
+$str_4:     .asciiz "OVERFLOW!"
+$str_5:     .asciiz "complete number: "
+$str_6:     .asciiz "  "
+$str_7:     .asciiz " "
+$str_8:     .asciiz "---------------------------------------------------------------"
+$str_9:     .asciiz "'water flower'number is:"
+$str_10:     .asciiz "  "
+$str_11:     .asciiz " "
+$str_12:     .asciiz "---------------------------------------------------------------"
+$str_13:     .asciiz " "
+$str_14:     .asciiz " "
+$str_15:     .asciiz "The total is "
+$str_16:     .asciiz "5 != "
+MAX_NUM:    .word 128
+
+.text
+    lui   $k1,    0x1004
+    jal   main
+    j     $END
+
+factorial:
+    addi  $gp,    $gp,    4
+    lw    $s0,    0($gp)
+    addi  $t0,    $s0,    -1
+    bgtz  $t0,    $label_0
+    li    $v1,    1
+    jr    $31
+$label_0:
+    addi  $t0,    $s0,    -1
+    sw    $t0,    ($gp)
+    addi  $gp,    $gp,    -4
+    sw    $s0,    0($sp)
+    addi  $sp,    $sp,    -20
+    sw    $ra,    8($sp)
+    sw    $fp,    4($sp)
+    move  $fp,    $sp
+
+    jal    factorial
+
+    move  $sp,    $fp
+    lw    $fp,    4($sp)
+    lw    $ra,    8($sp)
+    addi  $sp,    $sp,    20
+    lw    $s0,    0($sp)
+    move  $t8,    $v1
+    move  $t0,    $t8
+    mul   $t1,    $s0,    $t0
+    move  $v1,    $t1
+    jr    $31
+
+mod:
+    addi  $gp,    $gp,    4
+    lw    $s0,    0($gp)
+    addi  $gp,    $gp,    4
+    lw    $s1,    0($gp)
+    div   $s1,    $s0
+    mflo  $t0
+    mul   $t1,    $t0,    $s0
+    sub   $s1,    $s1,    $t1
+    move  $v1,    $s1
+    jr    $31
+
+swap:
+    addi  $gp,    $gp,    4
+    lw    $s0,    0($gp)
+    addi  $gp,    $gp,    4
+    lw    $s1,    0($gp)
+    la    $a0,    $str_0
+    li    $v0,    4
+    syscall
+    move  $a0,    $s1
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    la    $a0,    $str_1
+    li    $v0,    4
+    syscall
+    move  $a0,    $s0
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    move  $s2,    $s1
+    move  $s1,    $s0
+    move  $s0,    $s2
+    la    $a0,    $str_2
+    li    $v0,    4
+    syscall
+    move  $a0,    $s1
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    la    $a0,    $str_3
+    li    $v0,    4
+    syscall
+    move  $a0,    $s0
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    jr    $31
+
+full_num:
+    addi  $gp,    $gp,    4
+    lw    $s0,    0($gp)
+    addi  $gp,    $gp,    4
+    lw    $s1,    0($gp)
+    addi  $gp,    $gp,    4
+    lw    $s2,    0($gp)
+    li    $t8,    100
+    mul   $t0,    $s2,    $t8
+    li    $t9,    10
+    mul   $t1,    $s1,    $t9
+    add   $t2,    $t0,    $t1
+    add   $t1,    $t2,    $s0
+    move  $v1,    $t1
+    jr    $31
+
+flower_num:
+    addi  $gp,    $gp,    4
+    lw    $s0,    0($gp)
+    addi  $gp,    $gp,    4
+    lw    $s1,    0($gp)
+    addi  $gp,    $gp,    4
+    lw    $s2,    0($gp)
+    mul   $t0,    $s2,    $s2
+    mul   $t1,    $t0,    $s2
+    mul   $t0,    $s1,    $s1
+    mul   $t2,    $t0,    $s1
+    add   $t0,    $t1,    $t2
+    mul   $t2,    $s0,    $s0
+    mul   $t1,    $t2,    $s0
+    add   $t2,    $t0,    $t1
+    move  $v1,    $t2
+    jr    $31
+
+complete_flower_num:
+    li    $t8,    2
+    move  $s0,    $t8
+    j    $label_1
+$label_2:
+    li    $t8,    1
+    sub   $s1,    $0,    $t8
+    move  $s2,    $s0
+    li    $t9,    1
+    move  $s3,    $t9
+    j    $label_3
+$label_4:
+    div   $s0,    $s3
+    mflo  $t0
+    mul   $s4,    $t0,    $s3
+    div   $s0,    $s3
+    mflo  $t0
+    mul   $t1,    $t0,    $s3
+    sub   $t0,    $s0,    $t1
+    move  $t1,    $t0
+    bne   $t1,    $0,    $label_5
+    addi  $s1,    $s1,    1
+    sub   $s2,    $s2,    $s3
+    addi  $t0,    $s1,    -128
+    bltz  $t0,    $label_6
+    la    $a0,    $str_4
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    j    $label_7
+$label_6:
+    move  $t0,    $s3
+    sll   $t8,    $s1,    2
+    sub   $t8,    $sp,    $t8
+    sw    $t0,    0($t8)
+$label_7:
+$label_5:
+    addi  $s3,    $s3,    1
+$label_3:
+    sub   $t0,    $s3,    $s0
+    bltz  $t0,    $label_4
+    bne   $s2,    $0,    $label_8
+    la    $a0,    $str_5
+    li    $v0,    4
+    syscall
+    move  $a0,    $s0
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    li    $t8,    0
+    move  $s3,    $t8
+    j    $label_9
+$label_10:
+    sll   $t8,    $s3,    2
+    sub   $t8,    $sp,    $t8
+    lw    $t0,    0($t8)
+    la    $a0,    $str_6
+    li    $v0,    4
+    syscall
+    move  $a0,    $t0
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    addi  $s3,    $s3,    1
+$label_9:
+    sub   $t0,    $s3,    $s1
+    blez  $t0,    $label_10
+    la    $a0,    $str_7
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+$label_8:
+    addi  $s0,    $s0,    1
+$label_1:
+    lw    $t8,    MAX_NUM
+    sub   $t0,    $s0,    $t8
+    bltz  $t0,    $label_2
+    la    $a0,    $str_8
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    la    $a0,    $str_9
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    li    $t8,    0
+    move  $s5,    $t8
+    li    $t9,    100
+    move  $s3,    $t9
+    j    $label_11
+$label_12:
+    li    $t8,    100
+    div   $s3,    $t8
+    mflo  $s1
+    li    $t9,    10
+    div   $s3,    $t9
+    mflo  $t0
+    move  $t1,    $t0
+    li    $t8,    10
+    div   $t1,    $t8
+    mflo  $t0
+    li    $t9,    10
+    mul   $t2,    $t0,    $t9
+    sub   $t0,    $t1,    $t2
+    move  $s0,    $t0
+    li    $t8,    10
+    div   $s3,    $t8
+    mflo  $t0
+    li    $t9,    10
+    mul   $t1,    $t0,    $t9
+    sub   $t0,    $s3,    $t1
+    move  $s6,    $t0
+    li    $t8,    100
+    mul   $t0,    $s1,    $t8
+    li    $t9,    10
+    mul   $t1,    $s0,    $t9
+    add   $t2,    $t0,    $t1
+    add   $t1,    $t2,    $s6
+    move  $t2,    $t1
+    mul   $t1,    $s1,    $s1
+    mul   $t0,    $t1,    $s1
+    mul   $t1,    $s0,    $s0
+    mul   $t3,    $t1,    $s0
+    add   $t1,    $t0,    $t3
+    mul   $t3,    $s6,    $s6
+    mul   $t0,    $t3,    $s6
+    add   $t3,    $t1,    $t0
+    move  $t0,    $t3
+    bne   $t2,    $t0,    $label_13
+    move  $t0,    $s3
+    sll   $t8,    $s5,    2
+    sub   $t8,    $sp,    $t8
+    sw    $t0,    0($t8)
+    addi  $s5,    $s5,    1
+$label_13:
+    addi  $s3,    $s3,    1
+$label_11:
+    lw    $t8,    MAX_NUM
+    addi  $t0,    $t8,    100
+    sub   $t1,    $s3,    $t0
+    bltz  $t1,    $label_12
+    li    $t8,    0
+    move  $s3,    $t8
+    j    $label_14
+$label_15:
+    sll   $t8,    $s3,    2
+    sub   $t8,    $sp,    $t8
+    lw    $t0,    0($t8)
+    la    $a0,    $str_10
+    li    $v0,    4
+    syscall
+    move  $a0,    $t0
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    addi  $s3,    $s3,    1
+$label_14:
+    sub   $t0,    $s3,    $s5
+    bltz  $t0,    $label_15
+    la    $a0,    $str_11
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    la    $a0,    $str_12
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    li    $t8,    0
+    move  $s7,    $t8
+    li    $t9,    1
+    move  $a1,    $t9
+    li    $t8,    2
+    move  $a2,    $t8
+    j    $label_16
+$label_17:
+    li    $t8,    2
+    div   $a2,    $t8
+    mflo  $a3
+    li    $t9,    2
+    move  $s3,    $t9
+    j    $label_18
+$label_19:
+    div   $a2,    $s3
+    mflo  $t0
+    mul   $k0,    $t0,    $s3
+    div   $a2,    $s3
+    mflo  $t0
+    mul   $t1,    $t0,    $s3
+    sub   $t0,    $a2,    $t1
+    move  $t1,    $t0
+    bne   $t1,    $0,    $label_20
+    li    $t8,    0
+    move  $a1,    $t8
+$label_20:
+    addi  $s3,    $s3,    1
+$label_18:
+    sub   $t0,    $s3,    $a3
+    blez  $t0,    $label_19
+    li    $t8,    1
+    bne   $a1,    $t8,    $label_21
+    la    $a0,    $str_13
+    li    $v0,    4
+    syscall
+    move  $a0,    $a2
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    addi  $s7,    $s7,    1
+    li    $t8,    10
+    div   $s7,    $t8
+    mflo  $t0
+    li    $t9,    10
+    mul   $k0,    $t0,    $t9
+    bne   $k0,    $s7,    $label_22
+    la    $a0,    $str_14
+    li    $v0,    4
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+$label_22:
+$label_21:
+    li    $t8,    1
+    move  $a1,    $t8
+    addi  $a2,    $a2,    1
+$label_16:
+    lw    $t8,    MAX_NUM
+    sub   $t0,    $a2,    $t8
+    blez  $t0,    $label_17
+    la    $a0,    $str_15
+    li    $v0,    4
+    syscall
+    move  $a0,    $s7
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    jr    $31
+
+main:
+    li    $t8,    5
+    sw    $t8,    ($gp)
+    addi  $gp,    $gp,    -4
+    addi  $sp,    $sp,    -12
+    sw    $ra,    8($sp)
+    sw    $fp,    4($sp)
+    move  $fp,    $sp
+
+    jal    factorial
+
+    move  $sp,    $fp
+    lw    $fp,    4($sp)
+    lw    $ra,    8($sp)
+    addi  $sp,    $sp,    12
+    move  $t8,    $v1
+    move  $s0,    $t8
+    la    $a0,    $str_16
+    li    $v0,    4
+    syscall
+    move  $a0,    $s0
+    li    $v0,    1
+    syscall
+    lui   $a0,    0x1001
+    li    $v0,    4
+    syscall
+    li    $t9,    5
+    sw    $t9,    ($gp)
+    addi  $gp,    $gp,    -4
+    li    $t8,    10
+    sw    $t8,    ($gp)
+    addi  $gp,    $gp,    -4
+    sw    $s0,    0($sp)
+    addi  $sp,    $sp,    -12
+    sw    $ra,    8($sp)
+    sw    $fp,    4($sp)
+    move  $fp,    $sp
+
+    jal    swap
+
+    move  $sp,    $fp
+    lw    $fp,    4($sp)
+    lw    $ra,    8($sp)
+    addi  $sp,    $sp,    12
+    lw    $s0,    0($sp)
+    sw    $s0,    0($sp)
+    addi  $sp,    $sp,    -12
+    sw    $ra,    8($sp)
+    sw    $fp,    4($sp)
+    move  $fp,    $sp
+
+    jal    complete_flower_num
+
+    move  $sp,    $fp
+    lw    $fp,    4($sp)
+    lw    $ra,    8($sp)
+    addi  $sp,    $sp,    12
+    lw    $s0,    0($sp)
+    jr    $31
+
+$END:
