@@ -1,5 +1,5 @@
 # Compiler_Design
-C-like compiler with error handling and code optimization
+C-like compiler with error handling and code optimization(Based on C++)
 
 1. Generated a quaternion from a C-like grammar, then generated MIPS language and optimize the code.
 2. Recognize syntax errors and semantic errors, and implement error localization.
