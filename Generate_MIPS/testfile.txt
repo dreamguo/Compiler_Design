@@ -1,0 +1,49 @@
+
+const int const1 = 'a', const2 = -100;
+const char const3 = '?';
+
+const int const4 = "? \nkg";
+const char const3 = '+';
+int a, change1['s'];
+char asdasd['2'];
+
+char change3;
+char gets1(int const3,int var2{
+	int const3;
+	int test[12];
+	change1['x'] = 1
+	test[1=2;
+	test[change3]=change1[1];
+	var2 = var1 + var2;
+	var2 = var1 + var2;
+	var2 = var + gets1;
+	do{
+		var=1+1
+	}
+	(1+1);
+	do
+		var=1+1
+	(1+1);
+}
+
+void func(int const3,char asd)
+{
+	int const3;
+    return (('x'));
+}
+void main({
+	int const3;
+	const3 = 10;
+	const1 = 21;
+	gets1(gets1(10, 'x' + 2),func(const1, const3));
+	printf("Hello World");
+	func(20,'a','a');
+	printf(gets2(10));
+	if (change1) ;
+	if (asdasd) ;
+	if (asdasd[2]) ;
+	if ('a') ;
+	
+	return (1);
+	change1 = 10 change1 = 9;
+}
