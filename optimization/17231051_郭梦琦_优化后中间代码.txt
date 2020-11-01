@@ -1,0 +1,252 @@
+$str_0: .asciiz "x = "
+$str_1: .asciiz "y = "
+$str_2: .asciiz "SWAP x = "
+$str_3: .asciiz "SWAP y = "
+$str_4: .asciiz "OVERFLOW!"
+$str_5: .asciiz "complete number: "
+$str_6: .asciiz "  "
+$str_7: .asciiz " "
+$str_8: .asciiz "---------------------------------------------------------------"
+$str_9: .asciiz "'water flower'number is:"
+$str_10: .asciiz "  "
+$str_11: .asciiz " "
+$str_12: .asciiz "---------------------------------------------------------------"
+$str_13: .asciiz " "
+$str_14: .asciiz " "
+$str_15: .asciiz "The total is "
+$str_16: .asciiz "5 != "
+var const int MAX_NUM
+MAX_NUM = 128
+int factorial()
+para int n
+$reg_0 = n <= 1
+BNZ_jump $reg_0 $label_0
+ret() 1
+set_label $label_0
+call_start factorial
+$reg_1 = n - 1
+push $reg_1
+call_end factorial
+$reg_2 = #ret_val
+$reg_3 = n * $reg_2
+ret() $reg_3
+int mod()
+para int x
+para int y
+$reg_4 = x / y
+$reg_5 = $reg_4 * y
+x = x - $reg_5
+ret() x
+void swap()
+para int x
+para int y
+var int temp
+print2 $str_0 x
+print2 $str_1 y
+temp = x
+x = y
+y = temp
+print2 $str_2 x
+print2 $str_3 y
+ret
+int full_num()
+para int n
+para int j
+para int a
+$reg_7 = n * 100
+$reg_8 = j * 10
+$reg_9 = $reg_7 + $reg_8
+$reg_10 = $reg_9 + a
+ret() $reg_10
+int flower_num()
+para int n
+para int j
+para int a
+$reg_11 = n * n
+$reg_12 = $reg_11 * n
+$reg_13 = j * j
+$reg_14 = $reg_13 * j
+$reg_15 = $reg_12 + $reg_14
+$reg_16 = a * a
+$reg_17 = $reg_16 * a
+$reg_18 = $reg_15 + $reg_17
+ret() $reg_18
+void complete_flower_num()
+var[] int k[128]
+var int i
+var int j
+var int n
+var int s
+var int x1
+var int y
+var int m
+var int k2
+var int h
+var int leap
+var int x2
+var int a
+var int b
+var int c
+j = 2
+jump $label_1
+set_label $label_2
+n = -1
+s = j
+i = 1
+jump $label_3
+set_label $label_4
+$reg_22 = j / i
+x1 = $reg_22 * i
+$reg_4 = j / i
+$reg_5 = $reg_4 * i
+$inline_0 = j - $reg_5
+$reg_24 = $inline_0
+inline_clear
+$reg_25 = $reg_24 == 0
+BNZ_jump $reg_25 $label_5
+n = n + 1
+s = s - i
+$reg_28 = n >= 128
+BNZ_jump $reg_28 $label_6
+print $str_4
+jump $label_7
+set_label $label_6
+$reg_29 = i
+[]store k[n] = $reg_29
+set_label $label_7
+set_label $label_5
+i = i + 1
+set_label $label_3
+$reg_21 = i < j
+BZ_jump $reg_21 $label_4
+$reg_31 = s == 0
+BNZ_jump $reg_31 $label_8
+print2 $str_5 j
+i = 0
+jump $label_9
+set_label $label_10
+[]load $reg_33 = k[i]
+print2 $str_6 $reg_33
+i = i + 1
+set_label $label_9
+$reg_32 = i <= n
+BZ_jump $reg_32 $label_10
+print $str_7
+set_label $label_8
+j = j + 1
+set_label $label_1
+$reg_19 = j < MAX_NUM
+BZ_jump $reg_19 $label_2
+print $str_8
+print $str_9
+y = 0
+i = 100
+jump $label_11
+set_label $label_12
+n = i / 100
+$reg_39 = i / 10
+$inline_1 = $reg_39
+$reg_4 = $inline_1 / 10
+$reg_5 = $reg_4 * 10
+$inline_2 = $inline_1 - $reg_5
+j = $inline_2
+inline_clear
+$reg_4 = i / 10
+$reg_5 = $reg_4 * 10
+$inline_3 = i - $reg_5
+a = $inline_3
+inline_clear
+$reg_7 = n * 100
+$reg_8 = j * 10
+$reg_9 = $reg_7 + $reg_8
+$reg_10 = $reg_9 + a
+$reg_42 = $reg_10
+inline_clear
+$reg_11 = n * n
+$reg_12 = $reg_11 * n
+$reg_13 = j * j
+$reg_14 = $reg_13 * j
+$reg_15 = $reg_12 + $reg_14
+$reg_16 = a * a
+$reg_17 = $reg_16 * a
+$reg_18 = $reg_15 + $reg_17
+$reg_43 = $reg_18
+inline_clear
+$reg_44 = $reg_42 == $reg_43
+BNZ_jump $reg_44 $label_13
+$reg_45 = i
+[]store k[y] = $reg_45
+y = y + 1
+set_label $label_13
+i = i + 1
+set_label $label_11
+$reg_36 = 100 + MAX_NUM
+$reg_37 = i < $reg_36
+BZ_jump $reg_37 $label_12
+i = 0
+jump $label_14
+set_label $label_15
+[]load $reg_49 = k[i]
+print2 $str_10 $reg_49
+i = i + 1
+set_label $label_14
+$reg_48 = i < y
+BZ_jump $reg_48 $label_15
+print $str_11
+print $str_12
+h = 0
+leap = 1
+m = 2
+jump $label_16
+set_label $label_17
+k2 = m / 2
+i = 2
+jump $label_18
+set_label $label_19
+$reg_54 = m / i
+x2 = $reg_54 * i
+$reg_4 = m / i
+$reg_5 = $reg_4 * i
+$inline_4 = m - $reg_5
+$reg_56 = $inline_4
+inline_clear
+$reg_57 = $reg_56 == 0
+BNZ_jump $reg_57 $label_20
+leap = 0
+set_label $label_20
+i = i + 1
+set_label $label_18
+$reg_53 = i <= k2
+BZ_jump $reg_53 $label_19
+$reg_59 = leap == 1
+BNZ_jump $reg_59 $label_21
+print2 $str_13 m
+h = h + 1
+$reg_61 = h / 10
+x2 = $reg_61 * 10
+$reg_63 = x2 == h
+BNZ_jump $reg_63 $label_22
+print $str_14
+set_label $label_22
+set_label $label_21
+leap = 1
+m = m + 1
+set_label $label_16
+$reg_51 = m <= MAX_NUM
+BZ_jump $reg_51 $label_17
+print2 $str_15 h
+ret
+void main()
+var int n
+call_start factorial
+push 5
+call_end factorial
+n = #ret_val
+print2 $str_16 n
+call_start swap
+push 5
+push 10
+call_end swap
+call_start complete_flower_num
+call_end complete_flower_num
+ret
